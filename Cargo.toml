@@ -8,3 +8,4 @@ edition = "2018"
 
 [dependencies]
 fltk = "0.10.9"
+json = "0.12.4"
