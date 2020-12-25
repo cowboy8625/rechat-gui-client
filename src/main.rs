@@ -43,7 +43,6 @@ fn main() {
             Ok(_) => {
                 let (username, message) = get_data_from_json(&buff);
                 if let (Some(user), Some(msg)) = (username, message) {
-                    eprintln!("Send: {}, {}", user, msg);
                     message_tx.send((user, msg)).expect("Unable to send received message over Channel");
                 }
             },
@@ -56,7 +55,6 @@ fn main() {
 
         match chat_box_rx.try_recv() {
             Ok(text) => {
-                println!("Chat Box");
                 let mut msg = vec![' '; MSG_SIZE];
                 // FIXME: change this to utf8
                 text.chars().enumerate().for_each(|(i, c)| {

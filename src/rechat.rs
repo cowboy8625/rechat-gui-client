@@ -69,10 +69,11 @@ impl ReChat {
 
                     let mut with_user_name = false;
                     if let Some(last) = &self.last_user_message {
-                        if !(*last == user.trim().to_string()) {
-                            with_user_name = true;
+                        if *last == user.trim().to_string() {
+                            self.last_user_message = Some(user.trim().to_string());
                         } else {
                             self.last_user_message = Some(user.trim().to_string());
+                            with_user_name = true;
                         }
                     } else {
                         self.last_user_message = Some(user.trim().to_string());
@@ -108,8 +109,6 @@ fn create_users_box() -> TextDisplay {
 }
 
 fn create_received_box() -> TextDisplay {
-    let mut image = fltk::image::SharedImage::load("D:/Minecraft stuff/Photos/Cowboy-image-final.jpg").expect("lksadjfkaj");
-    image.scale(MESSAGE_W,MESSAGE_H,true, true);
     let mut received_box = TextDisplay::default()
         .with_size(MESSAGE_W, MESSAGE_H)
         .with_pos(MESSAGE_X, MESSAGE_Y);
@@ -117,7 +116,6 @@ fn create_received_box() -> TextDisplay {
     received_box.set_color(Color::Black);
     received_box.set_text_color(Color::White);
     received_box.wrap_mode(WrapMode::AtPixel, MESSAGE_W - 10);
-    received_box.set_image(Some(image));
     received_box
 }
 
