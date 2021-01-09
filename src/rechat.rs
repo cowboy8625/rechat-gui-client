@@ -2,6 +2,11 @@ use crate::*;
 use std::sync::mpsc;
 use fltk::{enums::*, frame::*, text::*, app::*, window::*};
 
+enum AppState {
+    MainScreen,
+    Login,
+}
+
 pub struct ReChat {
     message_rx: mpsc::Receiver<(String, String)>,
     _app: App,
@@ -11,6 +16,7 @@ pub struct ReChat {
     users_box: TextDisplay,
     message_list: Vec<String>,
     last_user_message: Option<String>,
+    state: AppState,
 }
 
 impl ReChat {
@@ -54,11 +60,13 @@ impl ReChat {
             users_box,
             message_list:  Vec::new(),
             last_user_message: None,
+            state: AppState::Login,
         }
     }
 
     pub fn mainloop(&mut self) {
         fltk::app::set_focus(&self.chat_box);
+        self.window.make_resizable(true);
         self.window.end();
         self.window.show();
         loop {
